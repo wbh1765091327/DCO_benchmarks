@@ -16,3 +16,6 @@
 [submodule "ResInfer"]
 	path = ResInfer
 	url = https://github.com/wbh1765091327/DCO_benchmarks_ResInfer.git
+[submodule "SuCo"]
+	path = SuCo
+	url = https://github.com/wbh1765091327/DCO_benchmarks_SuCo.git
