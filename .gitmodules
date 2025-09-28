@@ -4,3 +4,6 @@
 [submodule "Flash"]
 	path = Flash
 	url = https://github.com/wbh1765091327/DCO_benchmarks_Flash.git
+[submodule "PDX"]
+	path = PDX
+	url = https://github.com/wbh1765091327/DCO_benchmarks_PDX.git
