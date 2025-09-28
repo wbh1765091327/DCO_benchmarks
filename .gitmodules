@@ -7,3 +7,9 @@
 [submodule "PDX"]
 	path = PDX
 	url = https://github.com/wbh1765091327/DCO_benchmarks_PDX.git
+[submodule "DCO_benchmarks_RaBitQ"]
+	path = DCO_benchmarks_RaBitQ
+	url = https://github.com/wbh1765091327/DCO_benchmarks_RaBitQ.git
+[submodule "RaBitQ"]
+	path = RaBitQ
+	url = https://github.com/wbh1765091327/DCO_benchmarks_RaBitQ.git
