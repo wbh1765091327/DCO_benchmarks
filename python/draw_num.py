@@ -6,11 +6,22 @@ import struct
 from tqdm import tqdm
 import pandas as pd
 import matplotlib.ticker as ticker
+from matplotlib.ticker import FuncFormatter
+import matplotlib as mpl
+
+# 基础字体
+mpl.rcParams['font.family'] = 'Times New Roman'
+
+# 让 mathtext 使用 Times New Roman
+mpl.rcParams['mathtext.fontset'] = 'custom'
+mpl.rcParams['mathtext.rm'] = 'Times New Roman'
+mpl.rcParams['mathtext.it'] = 'Times New Roman'
+mpl.rcParams['mathtext.bf'] = 'Times New Roman'
 
 # datasets = ['glove-200-angular_1k','glove-200-angular_10k','glove-200-angular_100k','glove-200-angula_1000k']
 # datasets2 = ['GloVe-200-1k','GloVe-200-10k','GloVe-200-100k','GloVe-200-1000k']
 datasets = ['instructorxl-arxiv-768_1k','instructorxl-arxiv-768_10k','instructorxl-arxiv-768_100k','instructorxl-arxiv-768_1000k']
-datasets2 = ['Instructorxl-768-1k','Instructorxl-768-10k','Instructorxl-768-100k','Instructorxl-768-1000k']
+datasets2 = ['InstructorXL-768-1k','InstructorXL-768-10k','InstructorXL-768-100k','InstructorXL-768-1000k']
 ivf_marker = ['o', 'o', 'o', 'o', 'o', 'o', 'o', 'o', 'o', 'o', 'o', 'o']
 col = ['#FF0000', '#0000FF', '#00AA00', '#FF8000', '#8000FF', '#FF1493', '#008B8B', '#B8860B', '#4B0082', '#228B22', '#FF4500']
 def load_result_data(filename, dataset):
@@ -144,13 +155,13 @@ if __name__ == "__main__":
 
 
         # plt.rc('font', family='Times New Roman')
-        plt.savefig(f'E:/cppwork/dco_benchmarks/DATA/figure/数据规模新/IVF_all_nosimd_num.png', dpi=400, bbox_inches='tight',format='png')
+        plt.savefig(f'E:/cppwork/dco_benchmarks/DATA/figure/数据规模新/IVF_all_nosimd_num.pdf', dpi=400, bbox_inches='tight',format='pdf')
         plt.show()
 
 
     for K in [10]:
         n_rows = 2
-        n_cols = (len(datasets) + 1) // 2
+        n_cols = 2
         fig, axes = plt.subplots(n_rows, n_cols, figsize=(10, 8), sharex=False, sharey=False)
 
         fig.subplots_adjust(hspace=0.3, wspace=0.2, top=0.85, left=0.08, right=1, bottom=0.12)
@@ -165,7 +176,7 @@ if __name__ == "__main__":
                     recall, Qps = load_result_data(filename, dataset)
                 elif i == 1:
                     label = "IVF-ADS"
-                    filename = f"E:/cppwork/dco_benchmarks/DATA/Resnew/数据规模和维度-d16/ivf/simd/IVF_RES_simd_1_dist_time.csv"
+                    filename = f"E:/cppwork/dco_benchmarks/DATA/Resnew/数据规模和维度-d32/recall@10/ivf/simd/IVF_RES_simd_1_dist_time.csv"
                     recall, Qps = load_result_data(filename, dataset)
                 elif i == 2:
                     label = "IVF-DADE"
@@ -201,7 +212,7 @@ if __name__ == "__main__":
                 mask = recall >= 0.80
                 ax.plot(recall[mask], Qps[mask], marker=ivf_marker[i], c=col[i], label=label, alpha=0.5, linestyle="--", markerfacecolor='white', markersize=6, linewidth=2.5, markeredgecolor=col[i], markeredgewidth=1.5)
 
-            ax.set_title(datasets2[idx], fontsize=22, fontfamily='Times New Roman')
+            ax.set_title(datasets2[idx], fontsize=18, fontfamily='Times New Roman')
             # ax.grid(linestyle='--', linewidth=0.5)
             ax.grid(True, which="major", linestyle="--", linewidth=0.5)
             ax.minorticks_on()
@@ -209,24 +220,26 @@ if __name__ == "__main__":
             ax.yaxis.set_major_formatter(plt.ScalarFormatter(useMathText=True))
             ax.set_yscale('log')
             ax.set_ylim(bottom=Qps.min(),top=41130)
-            ax.set_yticks([1e5]) 
+            ax.set_yticks([1e4,1e5]) 
             ax.set_xlim(left=0.80)
-            ax.yaxis.set_major_locator(plt.MaxNLocator(4))
             ax.xaxis.set_major_locator(plt.MaxNLocator(4))
             ax.tick_params(axis='both', which='major', labelsize=16)
 
         # 设置公共x/y轴标签
-        fig.text(0.55, 0.04, 'Recall@10', ha='center', fontsize=22)
-        fig.text(0, 0.5, 'Qps', va='center', rotation='vertical', fontsize=22)
+        fig.text(0.525, 0.055, 'Recall@10', ha='center', fontsize=18)
+        fig.text(0, 0.48, 'QPS',
+            va='center', rotation='vertical', fontsize=18
+        )
+           
 
         handles, labels = ax.get_legend_handles_labels()
-        legend = fig.legend(handles, labels, loc='upper center', ncol=3, fontsize=22, 
-                          bbox_to_anchor=(0.5, 1.1), handlelength=2.5, handletextpad=1.2, columnspacing=1.5)
+        legend = fig.legend(handles, labels, loc='upper center', ncol=3, fontsize=18, 
+                          bbox_to_anchor=(0.5, 1.04), handlelength=3, handletextpad=1.2, columnspacing=1)
         legend.get_frame().set_edgecolor('none')  # 删除图例外边框
         legend.get_frame().set_facecolor('none')  # 删除图例背景
 
-        # plt.rc('font', family='Times New Roman')
-        plt.savefig(f'E:/cppwork/dco_benchmarks/DATA/figure/数据规模新/IVF_all_simd_num.png', dpi=400, bbox_inches='tight',format='png')
+        plt.rc('font', family='Times New Roman')
+        plt.savefig(f'E:/cppwork/dco_benchmarks/DATA/figure/数据规模新/IVF_all_simd_num.pdf', dpi=400, bbox_inches='tight',format='pdf')
         plt.show()
     
     for K in [10]:
@@ -269,7 +282,7 @@ if __name__ == "__main__":
             ax.set_title(datasets2[idx], fontsize=22, fontfamily='Times New Roman')
             ax.grid(linestyle='--', linewidth=0.5)
             ax.ticklabel_format(style='sci', axis='y', scilimits=(0, 0))
-            ax.yaxis.set_major_formatter(plt.ScalarFormatter(useMathText=True))
+            ax.yaxis.set_major_formatter(FuncFormatter(lambda y, pos: f'{y/1000:.1f}'))
             ax.set_ylim(bottom=0)
             ax.set_xlim(left=0.80)
             ax.yaxis.set_major_locator(plt.MaxNLocator(4))
@@ -291,7 +304,7 @@ if __name__ == "__main__":
         legend.get_frame().set_facecolor('none')  # 删除图例背景
 
         # plt.rc('font', family='Times New Roman')
-        plt.savefig(f'E:/cppwork/dco_benchmarks/DATA/figure/数据规模新/hnsw_all_nosimd_num.png', dpi=400, bbox_inches='tight',format='png')
+        plt.savefig(f'E:/cppwork/dco_benchmarks/DATA/figure/数据规模新/hnsw_all_nosimd_num.pdf', dpi=400, bbox_inches='tight',format='pdf')
         plt.show()
 
     for K in [10]:
@@ -365,5 +378,5 @@ if __name__ == "__main__":
 
 
         # plt.rc('font', family='Times New Roman')
-        plt.savefig(f'E:/cppwork/dco_benchmarks/DATA/figure/数据规模新/hnsw_all_simd_num.png', dpi=400, bbox_inches='tight',format='png')
+        plt.savefig(f'E:/cppwork/dco_benchmarks/DATA/figure/数据规模新/hnsw_all_simd_num.pdf', dpi=400, bbox_inches='tight',format='pdf')
         plt.show()

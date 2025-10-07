@@ -6,6 +6,17 @@ import struct
 from tqdm import tqdm
 import pandas as pd
 import matplotlib.ticker as ticker
+from matplotlib.ticker import FuncFormatter
+import matplotlib as mpl
+
+# 基础字体
+mpl.rcParams['font.family'] = 'Times New Roman'
+
+# 让 mathtext 使用 Times New Roman
+mpl.rcParams['mathtext.fontset'] = 'custom'
+mpl.rcParams['mathtext.rm'] = 'Times New Roman'
+mpl.rcParams['mathtext.it'] = 'Times New Roman'
+mpl.rcParams['mathtext.bf'] = 'Times New Roman'
 
 datasets = ['glove-25-angular_100k','glove-50-angular_100k','glove-100-angular_100k','glove-200-angular_100k']
 datasets2 = ['GloVe-25','GloVe-50','GloVe-100','GloVe-200']
@@ -143,7 +154,7 @@ if __name__ == "__main__":
 
 
         # plt.rc('font', family='Times New Roman')
-        plt.savefig(f'E:/cppwork/dco_benchmarks/DATA/figure/维度分布/IVF_all_nosimd_dimsize.png', dpi=400, bbox_inches='tight',format='png')
+        plt.savefig(f'E:/cppwork/dco_benchmarks/DATA/figure/维度分布/IVF_all_nosimd_dimsize.pdf', dpi=400, bbox_inches='tight',format='pdf')
         plt.show()
 
 
@@ -200,28 +211,31 @@ if __name__ == "__main__":
                 mask = recall >= 0.80
                 ax.plot(recall[mask], Qps[mask], marker=ivf_marker[i], c=col[i], label=label, alpha=0.5, linestyle="--", markerfacecolor='white', markersize=6, linewidth=2.5, markeredgecolor=col[i], markeredgewidth=1.5)
 
-            ax.set_title(datasets2[idx], fontsize=22, fontfamily='Times New Roman')
+            # 使用简化的数据集名称作为标题
+            ax.set_title(datasets2[idx], fontsize=18, fontfamily='Times New Roman')
             ax.grid(linestyle='--', linewidth=0.5)
-            ax.ticklabel_format(style='sci', axis='y', scilimits=(0, 0))
-            ax.yaxis.set_major_formatter(plt.ScalarFormatter(useMathText=True))
+            ax.yaxis.set_major_formatter(FuncFormatter(lambda y, pos: f'{y/1000:.1f}'))
             ax.set_ylim(bottom=0)
             ax.set_xlim(left=0.80)
             ax.yaxis.set_major_locator(plt.MaxNLocator(4))
             ax.xaxis.set_major_locator(plt.MaxNLocator(4))
+            # 增大坐标轴数字字体大小
             ax.tick_params(axis='both', which='major', labelsize=16)
 
-        # 设置公共x/y轴标签
-        fig.text(0.55, 0.04, 'Recall@10', ha='center', fontsize=22)
-        fig.text(0, 0.5, 'Qps', va='center', rotation='vertical', fontsize=22)
+
+        fig.text(0.525, 0.055, 'Recall@10', ha='center', fontsize=18)
+        fig.text(0, 0.48, r'$\mathrm{QPS}\ (10^{3})$',
+            va='center', rotation='vertical', fontsize=18
+        )
 
         handles, labels = ax.get_legend_handles_labels()
-        legend = fig.legend(handles, labels, loc='upper center', ncol=3, fontsize=22, 
-                          bbox_to_anchor=(0.5, 1.1), handlelength=2.5, handletextpad=1.2, columnspacing=1.5)
+        legend = fig.legend(handles, labels, loc='upper center', ncol=3, fontsize=18, 
+                          bbox_to_anchor=(0.5, 1.04), handlelength=3, handletextpad=1.2, columnspacing=1)
         legend.get_frame().set_edgecolor('none')  # 删除图例外边框
         legend.get_frame().set_facecolor('none')  # 删除图例背景
 
         # plt.rc('font', family='Times New Roman')
-        plt.savefig(f'E:/cppwork/dco_benchmarks/DATA/figure/维度分布/IVF_all_simd_dimsize.png', dpi=400, bbox_inches='tight',format='png')
+        plt.savefig(f'E:/cppwork/dco_benchmarks/DATA/figure/维度分布/IVF_all_simd_dimsize.pdf', dpi=400, bbox_inches='tight',format='pdf')
         plt.show()
     
     for K in [10]:
@@ -261,7 +275,7 @@ if __name__ == "__main__":
                 ax.plot(recall[mask], Qps[mask], marker=ivf_marker[i], c=col[i], label=label, alpha=0.5, linestyle="--", markerfacecolor='white', markersize=6, linewidth=2.5, markeredgecolor=col[i], markeredgewidth=1.5)
 
             # 使用简化的数据集名称作为标题
-            ax.set_title(datasets2[idx], fontsize=22, fontfamily='Times New Roman')
+            ax.set_title(datasets2[idx], fontsize=18, fontfamily='Times New Roman')
             ax.grid(linestyle='--', linewidth=0.5)
             ax.ticklabel_format(style='sci', axis='y', scilimits=(0, 0))
             ax.set_ylim(bottom=0)
@@ -272,9 +286,11 @@ if __name__ == "__main__":
             # 增大坐标轴数字字体大小
             ax.tick_params(axis='both', which='major', labelsize=16)
 
-        # 设置公共x/y轴标签
-        fig.text(0.53, 0.04, 'Recall@10', ha='center', fontsize=22)
-        fig.text(0, 0.47, 'Qps', va='center', rotation='vertical', fontsize=22)
+
+        fig.text(0.525, 0.055, 'Recall@10', ha='center', fontsize=18)
+        fig.text(0, 0.48, r'$\mathrm{QPS}\ (10^{3})$',
+            va='center', rotation='vertical', fontsize=18
+        )
 
         handles, labels = ax.get_legend_handles_labels()
         legend = fig.legend(handles, labels, 
@@ -286,7 +302,7 @@ if __name__ == "__main__":
         legend.get_frame().set_facecolor('none')  # 删除图例背景
 
         # plt.rc('font', family='Times New Roman')
-        plt.savefig(f'E:/cppwork/dco_benchmarks/DATA/figure/维度分布/hnsw_all_nosimd_dimsize.png', dpi=400, bbox_inches='tight',format='png')
+        plt.savefig(f'E:/cppwork/dco_benchmarks/DATA/figure/维度分布/hnsw_all_nosimd_dimsize.pdf', dpi=400, bbox_inches='tight',format='pdf')
         plt.show()
 
     for K in [10]:
@@ -359,5 +375,5 @@ if __name__ == "__main__":
         legend.get_frame().set_facecolor('none')  # 删除图例背景
 
         # plt.rc('font', family='Times New Roman')
-        plt.savefig(f'E:/cppwork/dco_benchmarks/DATA/figure/维度分布/hnsw_all_simd_dimsize.png', dpi=400, bbox_inches='tight',format='png')
+        plt.savefig(f'E:/cppwork/dco_benchmarks/DATA/figure/维度分布/hnsw_all_simd_dimsize.pdf', dpi=400, bbox_inches='tight',format='pdf')
         plt.show()

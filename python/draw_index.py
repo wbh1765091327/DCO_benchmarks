@@ -6,11 +6,21 @@ import struct
 from tqdm import tqdm
 import pandas as pd
 import matplotlib.ticker as ticker
+from matplotlib.ticker import FuncFormatter
+import matplotlib as mpl
 
+# 基础字体
+mpl.rcParams['font.family'] = 'Times New Roman'
+
+# 让 mathtext 使用 Times New Roman
+mpl.rcParams['mathtext.fontset'] = 'custom'
+mpl.rcParams['mathtext.rm'] = 'Times New Roman'
+mpl.rcParams['mathtext.it'] = 'Times New Roman'
+mpl.rcParams['mathtext.bf'] = 'Times New Roman'
 
 ivf_marker = ['o', 'o', 'o', 'o', 'o', 'o', 'o', 'o', 'o', 'o', 'o', 'o']
 col = ['#FF0000', '#0000FF', '#00AA00', '#FF8000', '#8000FF', '#FF1493', '#008B8B', '#B8860B', '#4B0082', '#228B22', '#FF4500']
-Clist = [158,316,632]
+Clist = [158,632]
 Mlist = [8,16,32]
 EFlist = [250,500,750]
 def load_result_data(filename, dataset):
@@ -226,14 +236,14 @@ if __name__ == "__main__":
 
 
         # plt.rc('font', family='Times New Roman')
-        plt.savefig(f'E:/cppwork/dco_benchmarks/DATA/figure/索引大小/IVF_all_nosimd_CLIST.png', dpi=400, bbox_inches='tight',format='png')
+        plt.savefig(f'E:/cppwork/dco_benchmarks/DATA/figure/索引大小/IVF_all_nosimd_CLIST.pdf', dpi=400, bbox_inches='tight',format='pdf')
         plt.show()
 
     for K in [10]:
         n_rows = 1
-        fig, axes = plt.subplots(n_rows, 3, figsize=(16, 4), sharex=False, sharey=False)
+        fig, axes = plt.subplots(n_rows, 2, figsize=(10, 3.5),sharex=False, sharey=False)
 
-        fig.subplots_adjust(hspace=0.3, wspace=0.2, top=0.85, left=0.08, right=0.95, bottom=0.12)
+        fig.subplots_adjust(hspace=0.3, wspace=0.2, top=0.85, left=0.08, right=1, bottom=0.12)
         axes = axes.flatten()
 
         for idx, C in enumerate(Clist):
@@ -282,7 +292,7 @@ if __name__ == "__main__":
                 ax.plot(recall[mask], Qps[mask], marker=ivf_marker[i], c=col[i], label=label, alpha=0.5, linestyle="--", markerfacecolor='white', markersize=6, linewidth=2.5, markeredgecolor=col[i], markeredgewidth=1.5)
             
 
-            ax.set_title(f"C={C}", fontsize=22, fontfamily='Times New Roman')
+            ax.set_title(f"C={C}", fontsize=18, fontfamily='Times New Roman')
             # ax.grid(linestyle='--', linewidth=0.5)
             ax.grid(True, which="major", linestyle="--", linewidth=0.5)  # 主刻度和次刻度都画网格
             ax.minorticks_on()
@@ -290,25 +300,26 @@ if __name__ == "__main__":
             ax.yaxis.set_major_formatter(plt.ScalarFormatter(useMathText=True))
             ax.set_yscale('log')
             ax.set_ylim(bottom=185,top=8800)
-            ax.set_yticks([1e4]) 
+            ax.set_yticks([1e3,1e4]) 
             ax.set_xlim(left=0.80)
-            ax.yaxis.set_major_locator(plt.MaxNLocator(4))
             ax.xaxis.set_major_locator(plt.MaxNLocator(4))
             ax.tick_params(axis='both', which='major', labelsize=16)
 
         # 设置公共x/y轴标签
-        fig.text(0.55, 0.04, 'Recall@10', ha='center', fontsize=22)
-        fig.text(0, 0.5, 'Qps', va='center', rotation='vertical', fontsize=22)
+        fig.text(0.53, -0.03, 'Recall@10', ha='center', fontsize=18)
+        fig.text(0.01, 0.48, 'QPS',
+            va='center', rotation='vertical', fontsize=18
+        )
 
         handles, labels = ax.get_legend_handles_labels()
-        legend = fig.legend(handles, labels, loc='upper center', ncol=5, fontsize=20, 
-                          bbox_to_anchor=(0.5, 1.2), handlelength=2.5, handletextpad=1.2, columnspacing=1.5)
+        legend = fig.legend(handles, labels, loc='upper center', ncol=3, fontsize=18, 
+                          bbox_to_anchor=(0.5, 1.29), handlelength=2.5, handletextpad=1.2, columnspacing=1)
         legend.get_frame().set_edgecolor('none')  # 删除图例外边框
         legend.get_frame().set_facecolor('none')  # 删除图例背景
 
 
         # plt.rc('font', family='Times New Roman')
-        plt.savefig(f'E:/cppwork/dco_benchmarks/DATA/figure/索引大小/IVF_all_simd_CLIST.png', dpi=400, bbox_inches='tight',format='png')
+        plt.savefig(f'E:/cppwork/dco_benchmarks/DATA/figure/索引大小/IVF_all_simd_CLIST.pdf', dpi=400, bbox_inches='tight',format='pdf')
         plt.show()
 
     for K in [10]:
@@ -381,7 +392,7 @@ if __name__ == "__main__":
 
 
         # plt.rc('font', family='Times New Roman')
-        plt.savefig(f'E:/cppwork/dco_benchmarks/DATA/figure/索引大小/HNSW_all_nosimd_M.png', dpi=400, bbox_inches='tight',format='png')
+        plt.savefig(f'E:/cppwork/dco_benchmarks/DATA/figure/索引大小/HNSW_all_nosimd_M.pdf', dpi=400, bbox_inches='tight',format='pdf')
         plt.show()
 
     for K in [10]:
@@ -454,7 +465,7 @@ if __name__ == "__main__":
 
 
         # plt.rc('font', family='Times New Roman')
-        plt.savefig(f'E:/cppwork/dco_benchmarks/DATA/figure/索引大小/HNSW_all_nosimd_EF.png', dpi=400, bbox_inches='tight',format='png')
+        plt.savefig(f'E:/cppwork/dco_benchmarks/DATA/figure/索引大小/HNSW_all_nosimd_EF.pdf', dpi=400, bbox_inches='tight',format='pdf')
         plt.show()
 
 
@@ -530,7 +541,7 @@ if __name__ == "__main__":
 
 
         # plt.rc('font', family='Times New Roman')
-        plt.savefig(f'E:/cppwork/dco_benchmarks/DATA/figure/索引大小/HNSW_all_simd_M.png', dpi=400, bbox_inches='tight',format='png')
+        plt.savefig(f'E:/cppwork/dco_benchmarks/DATA/figure/索引大小/HNSW_all_simd_M.pdf', dpi=400, bbox_inches='tight',format='pdf')
         plt.show()
 
     for K in [10]:
@@ -605,5 +616,5 @@ if __name__ == "__main__":
 
 
         # plt.rc('font', family='Times New Roman')
-        plt.savefig(f'E:/cppwork/dco_benchmarks/DATA/figure/索引大小/HNSW_all_simd_EF.png', dpi=400, bbox_inches='tight',format='png')
+        plt.savefig(f'E:/cppwork/dco_benchmarks/DATA/figure/索引大小/HNSW_all_simd_EF.pdf', dpi=400, bbox_inches='tight',format='pdf')
         plt.show()

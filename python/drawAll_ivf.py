@@ -6,9 +6,20 @@ import struct
 from tqdm import tqdm
 import pandas as pd
 import matplotlib.ticker as ticker
+from matplotlib.ticker import FuncFormatter
+import matplotlib as mpl
+
+# 基础字体
+mpl.rcParams['font.family'] = 'Times New Roman'
+
+# 让 mathtext 使用 Times New Roman
+mpl.rcParams['mathtext.fontset'] = 'custom'
+mpl.rcParams['mathtext.rm'] = 'Times New Roman'
+mpl.rcParams['mathtext.it'] = 'Times New Roman'
+mpl.rcParams['mathtext.bf'] = 'Times New Roman'
 
 datasets = ['glove-200-angular','deep-image-96-angular','contriever-768','instructorxl-arxiv-768','sift-128-euclidean','msong-420','gist-960-euclidean','openai-1536-angular']
-datasets2 = ['GloVe','DEEP','Contriever','Instructorxl','SIFT','MSong','GIST','OpenAI']
+datasets2 = ['GloVe','DEEP','Contriever','InstructorXL','SIFT','MSong','GIST','OpenAI']
 ivf_marker = ['o', 'o', 'o', 'o', 'o', 'o', 'o', 'o', 'o', 'o', 'o', 'o']
 col = ['#FF0000', '#0000FF', '#00AA00', '#FF8000', '#8000FF', '#FF1493', '#008B8B', '#B8860B', '#4B0082', '#228B22', '#FF4500']
 
@@ -89,9 +100,9 @@ if __name__ == "__main__":
     for K in [10]:
         n_rows = 2
         n_cols = (len(datasets) + 1) // 2
-        fig, axes = plt.subplots(n_rows, n_cols, figsize=(20, 8), sharex=False, sharey=False)
+        fig, axes = plt.subplots(n_rows, n_cols, figsize=(18, 7), sharex=False, sharey=False)
 
-        fig.subplots_adjust(hspace=0.3, wspace=0.2, top=0.85, left=0.08, right=0.95, bottom=0.12)
+        fig.subplots_adjust(hspace=0.26, wspace=0.15, top=0.85, left=0.08, right=0.95, bottom=0.12)
         axes = axes.flatten()
 
         for idx, dataset in enumerate(datasets):
@@ -140,28 +151,30 @@ if __name__ == "__main__":
                 ax.plot(recall[mask], Qps[mask], marker=ivf_marker[i], c=col[i], label=label, alpha=0.5, linestyle="--", markerfacecolor='white', markersize=6, linewidth=2.5, markeredgecolor=col[i], markeredgewidth=1.5)
             
 
-            ax.set_title(datasets2[idx], fontsize=22, fontfamily='Times New Roman')
+            ax.set_title(datasets2[idx], fontsize=18, fontfamily='Times New Roman')
             ax.grid(linestyle='--', linewidth=0.5)
-            ax.ticklabel_format(style='sci', axis='y', scilimits=(0, 0))
-            ax.yaxis.set_major_formatter(plt.ScalarFormatter(useMathText=True))
+            ax.yaxis.set_major_formatter(FuncFormatter(lambda y, pos: f'{y/1000:.1f}'))
             ax.set_ylim(bottom=0)
             ax.set_xlim(left=0.80)
             ax.yaxis.set_major_locator(plt.MaxNLocator(4))
             ax.xaxis.set_major_locator(plt.MaxNLocator(4))
-            ax.tick_params(axis='both', which='major', labelsize=16)
+            # 增大坐标轴数字字体大小
+            ax.tick_params(axis='both', which='major', labelsize=16, labelfontfamily='Times New Roman')
 
         # 设置公共x/y轴标签
-        fig.text(0.5, 0.04, 'Recall@10', ha='center', fontsize=22)
-        fig.text(0.04, 0.5, 'Qps', va='center', rotation='vertical', fontsize=22)
+        fig.text(0.5, 0.04, 'Recall@10', ha='center', fontsize=18, fontfamily='Times New Roman')
+        fig.text(
+            0.035, 0.5, r'$\mathrm{QPS}\ (10^{3})$',
+            va='center', rotation='vertical', fontsize=18
+        )
 
         handles, labels = ax.get_legend_handles_labels()
-        legend = fig.legend(handles, labels, loc='upper center', ncol=5, fontsize=22, 
-                          bbox_to_anchor=(0.5, 1.03), handlelength=2.5, handletextpad=1.2, columnspacing=1.5)
+        legend = fig.legend(handles, labels, loc='upper center', ncol=5, fontsize=18, 
+                          bbox_to_anchor=(0.5, 1.03), handlelength=3, handletextpad=1.2, columnspacing=1)
         legend.get_frame().set_edgecolor('none')  # 删除图例外边框
         legend.get_frame().set_facecolor('none')  # 删除图例背景
 
-
-        # plt.rc('font', family='Times New Roman')
+        plt.rc('font', family='Times New Roman')
         plt.savefig(f'E:/cppwork/dco_benchmarks/DATA/figure/RES/IVF/IVF_all_nosimd_dist_time.pdf', dpi=400, bbox_inches='tight',format='pdf')
         plt.show()
 
@@ -169,9 +182,9 @@ if __name__ == "__main__":
     for K in [10]:
         n_rows = 2
         n_cols = (len(datasets) + 1) // 2
-        fig, axes = plt.subplots(n_rows, n_cols, figsize=(20, 8), sharex=False, sharey=False)
+        fig, axes = plt.subplots(n_rows, n_cols, figsize=(18, 7), sharex=False, sharey=False)
 
-        fig.subplots_adjust(hspace=0.3, wspace=0.2, top=0.85, left=0.08, right=0.95, bottom=0.12)
+        fig.subplots_adjust(hspace=0.26, wspace=0.15, top=0.85, left=0.08, right=0.95, bottom=0.12)
         axes = axes.flatten()
 
         for idx, dataset in enumerate(datasets):
@@ -221,26 +234,29 @@ if __name__ == "__main__":
                 mask = recall >= 0.80
                 ax.plot(recall[mask], Qps[mask], marker=ivf_marker[i], c=col[i], label=label, alpha=0.5, linestyle="--", markerfacecolor='white', markersize=6, linewidth=2.5, markeredgecolor=col[i], markeredgewidth=1.5)
 
-            ax.set_title(datasets2[idx], fontsize=22, fontfamily='Times New Roman')
+            ax.set_title(datasets2[idx], fontsize=18, fontfamily='Times New Roman')
             ax.grid(linestyle='--', linewidth=0.5)
-            ax.ticklabel_format(style='sci', axis='y', scilimits=(0, 0))
-            ax.yaxis.set_major_formatter(plt.ScalarFormatter(useMathText=True))
+            ax.yaxis.set_major_formatter(FuncFormatter(lambda y, pos: f'{y/1000:.1f}'))
             ax.set_ylim(bottom=0)
             ax.set_xlim(left=0.80)
             ax.yaxis.set_major_locator(plt.MaxNLocator(4))
             ax.xaxis.set_major_locator(plt.MaxNLocator(4))
-            ax.tick_params(axis='both', which='major', labelsize=16)
+            # 增大坐标轴数字字体大小
+            ax.tick_params(axis='both', which='major', labelsize=16, labelfontfamily='Times New Roman')
 
         # 设置公共x/y轴标签
-        fig.text(0.5, 0.04, 'Recall@10', ha='center', fontsize=22)
-        fig.text(0.04, 0.5, 'Qps', va='center', rotation='vertical', fontsize=22)
+        fig.text(0.5, 0.04, 'Recall@10', ha='center', fontsize=18, fontfamily='Times New Roman')
+        fig.text(
+            0.035, 0.5, r'$\mathrm{QPS}\ (10^{3})$',
+            va='center', rotation='vertical', fontsize=18
+        )
 
         handles, labels = ax.get_legend_handles_labels()
-        legend = fig.legend(handles, labels, loc='upper center', ncol=5, fontsize=22, 
-                          bbox_to_anchor=(0.5, 1.03), handlelength=2.5, handletextpad=1.2, columnspacing=1.5)
+        legend = fig.legend(handles, labels, loc='upper center', ncol=5, fontsize=18, 
+                          bbox_to_anchor=(0.5, 1.03), handlelength=3, handletextpad=1.2, columnspacing=1)
         legend.get_frame().set_edgecolor('none')  # 删除图例外边框
         legend.get_frame().set_facecolor('none')  # 删除图例背景
 
-        # plt.rc('font', family='Times New Roman')
+        plt.rc('font', family='Times New Roman')
         plt.savefig(f'E:/cppwork/dco_benchmarks/DATA/figure/RES/IVF/IVF_all_simd_dist_time.pdf', dpi=400, bbox_inches='tight',format='pdf')
         plt.show()

@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 # 数据集（X轴）
-datasets = ['Contriever', 'DEEP', 'GIST', 'GloVe', 'Instructorxl', 'MSong', 'OpenAI', 'SIFT']
+datasets = ['Contriever', 'DEEP', 'GIST', 'GloVe', 'InstructorXL', 'MSong', 'OpenAI', 'SIFT']
 n_datasets = len(datasets)
 
 # 方法（行名）
@@ -73,7 +73,7 @@ def draw_chart(ax, data, methods, title, ylabel):
     ax.set_yscale('log')
     ax.set_ylabel(ylabel, fontsize=13)
     ax.set_xticks(index)
-    ax.set_xticklabels(datasets, rotation=45, ha='right')
+    ax.set_xticklabels(datasets, rotation=0, ha='center')
     ax.tick_params(axis='both', which='major', labelsize=11)
 
     # 图例放上方
@@ -88,5 +88,5 @@ fig, ax = plt.subplots(1, 1, figsize=(8, 7))
 draw_chart(ax, data_query_process, methods_query_process, '(3) Query & Processing Time', 'Time Consumption (us)')
 
 plt.tight_layout(rect=[0, 0.2, 1, 0.85])
-plt.savefig(f'E:/cppwork/dco_benchmarks/DATA/figure/ALL/HNSW/query_preprocessing_time.png', dpi=400, bbox_inches='tight',format='png')
+plt.savefig(f'E:/cppwork/dco_benchmarks/DATA/figure/ALL/HNSW/query_preprocessing_time.pdf', dpi=400, bbox_inches='tight',format='pdf')
 plt.show()
