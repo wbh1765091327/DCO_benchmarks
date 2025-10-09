@@ -31,7 +31,7 @@ You need to place the hdf5 data file in the dcoubenchmarks \ DATA \ hdf5 directo
 
 Our server setup includes two Intel Xeon Gold 5318Y CPUs, each with 24 cores and 48 threads, totaling 96 CPU cores. The server boasts 2TB of memory and runs on CentOS Stream 8 operating system.
 
-We also provide a dockerfile based on Ubuntu22.04 with all the dependencies installed. All the following experiments need to set the source path according to their own environment, otherwise an error will occur when running.
+We also provide a dockerfile based on Ubuntu22.04 with all the dependencies installed. All the following experiments need to set the base or source path in the py and sh files according to their own environment, otherwise an error will occur when running.
 
 ## Setup dataset
 首先将数据下载到/benchmarks/DATA/hdf5目录下，将hdf5格式转化为fvecs格式的query和base，然后根据实验需求(完整数据集还是部分数据集)决定是否执行data_split.py。
