@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plt
 import numpy as np
-
+import matplotlib as mpl
 # 数据集（X轴）
 datasets = ['Contriever', 'DEEP', 'GIST', 'GloVe', 'InstructorXL', 'MSong', 'OpenAI', 'SIFT']
 n_datasets = len(datasets)
@@ -9,6 +9,15 @@ n_datasets = len(datasets)
 methods_query_process = [
     'ADS', 'DADE', r"DDC$_{res}$", r"DDC$_{pca}$", r"DDC$_{opq}$", 'RaBitQ','Finger','Flash'
 ]
+# 基础字体
+mpl.rcParams['font.family'] = 'Arial Unicode MS'
+
+# 让 mathtext 使用 Arial Unicode MS
+mpl.rcParams['mathtext.fontset'] = 'custom'
+mpl.rcParams['mathtext.rm'] = 'Arial Unicode MS'
+mpl.rcParams['mathtext.it'] = 'Arial Unicode MS'
+mpl.rcParams['mathtext.bf'] = 'Arial Unicode MS'
+
 
 # 表格数据（单位 us）
 data_query_process = {
@@ -85,7 +94,7 @@ def draw_chart(ax, data, methods, title, ylabel):
 
 # 创建画布
 fig, ax = plt.subplots(1, 1, figsize=(8, 7))
-draw_chart(ax, data_query_process, methods_query_process, '(3) Query & Processing Time', 'Time Consumption (us)')
+draw_chart(ax, data_query_process, methods_query_process, '(3) Query & Processing Time', 'Time (us)')
 
 plt.tight_layout(rect=[0, 0.2, 1, 0.85])
 plt.savefig(f'E:/cppwork/dco_benchmarks/DATA/figure/ALL/HNSW/query_preprocessing_time.pdf', dpi=400, bbox_inches='tight',format='pdf')

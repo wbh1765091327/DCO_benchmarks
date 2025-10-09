@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plt
 import numpy as np
-
+import matplotlib as mpl
 # --- 1. 准备数据和配置 ---
 
 # X轴类别，两个图共享
@@ -10,6 +10,14 @@ n_datasets = len(datasets)
 # --- 数据和配置 for 左图 (HNSW Index Pre-Processing Time) ---
 methods_time = ['ADS', "DADE", r"DDC$_{res}$", r"DDC$_{pca}$", r"DDC$_{opq}$", "RaBitQ", 'Finger','Flash']
 
+# 基础字体
+mpl.rcParams['font.family'] = 'Arial Unicode MS'
+
+# 让 mathtext 使用 Arial Unicode MS
+mpl.rcParams['mathtext.fontset'] = 'custom'
+mpl.rcParams['mathtext.rm'] = 'Arial Unicode MS'
+mpl.rcParams['mathtext.it'] = 'Arial Unicode MS'
+mpl.rcParams['mathtext.bf'] = 'Arial Unicode MS'
 
 data_time = {
     # 根据左图估算数据
@@ -141,7 +149,7 @@ def draw_chart(ax, data, methods, title, ylabel,ncol):
 # 保存左图 (HNSW)
 fig_left = plt.figure(figsize=(10, 8))
 ax_left = fig_left.add_subplot(111)
-draw_chart(ax_left, data_time, methods_time, '(1) HNSW Pre-Processing Time', 'Time Consumption (Sec)',4)
+draw_chart(ax_left, data_time, methods_time, '(1) HNSW Pre-Processing Time', 'Time (s)',4)
 plt.tight_layout(rect=[0, 0.2, 1, 0.85])
 plt.savefig(f'E:/cppwork/dco_benchmarks/DATA/figure/ALL/HNSW/hnsw_preprocessing_time_sum.pdf', dpi=400, bbox_inches='tight',format='pdf')
 plt.close(fig_left)
@@ -149,7 +157,7 @@ plt.close(fig_left)
 # 保存右图 (IVF)
 fig_right = plt.figure(figsize=(10, 8))
 ax_right = fig_right.add_subplot(111)
-draw_chart(ax_right, data_space, methods_space, '(2) IVF Pre-Processing Time', 'Time Consumption (Sec)',5)
+draw_chart(ax_right, data_space, methods_space, '(2) IVF Pre-Processing Time', 'Time (s)',5)
 plt.tight_layout(rect=[0, 0.2, 1, 0.85])
 plt.savefig(f'E:/cppwork/dco_benchmarks/DATA/figure/ALL/HNSW/ivf_preprocessing_time_sum.pdf', dpi=400, bbox_inches='tight',format='pdf')
 plt.close(fig_right)

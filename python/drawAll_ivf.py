@@ -10,13 +10,13 @@ from matplotlib.ticker import FuncFormatter
 import matplotlib as mpl
 
 # 基础字体
-mpl.rcParams['font.family'] = 'Times New Roman'
+mpl.rcParams['font.family'] = 'Arial Unicode MS'
 
-# 让 mathtext 使用 Times New Roman
+# 让 mathtext 使用 Arial Unicode MS
 mpl.rcParams['mathtext.fontset'] = 'custom'
-mpl.rcParams['mathtext.rm'] = 'Times New Roman'
-mpl.rcParams['mathtext.it'] = 'Times New Roman'
-mpl.rcParams['mathtext.bf'] = 'Times New Roman'
+mpl.rcParams['mathtext.rm'] = 'Arial Unicode MS'
+mpl.rcParams['mathtext.it'] = 'Arial Unicode MS'
+mpl.rcParams['mathtext.bf'] = 'Arial Unicode MS'
 
 datasets = ['glove-200-angular','deep-image-96-angular','contriever-768','instructorxl-arxiv-768','sift-128-euclidean','msong-420','gist-960-euclidean','openai-1536-angular']
 datasets2 = ['GloVe','DEEP','Contriever','InstructorXL','SIFT','MSong','GIST','OpenAI']
@@ -151,7 +151,7 @@ if __name__ == "__main__":
                 ax.plot(recall[mask], Qps[mask], marker=ivf_marker[i], c=col[i], label=label, alpha=0.5, linestyle="--", markerfacecolor='white', markersize=6, linewidth=2.5, markeredgecolor=col[i], markeredgewidth=1.5)
             
 
-            ax.set_title(datasets2[idx], fontsize=18, fontfamily='Times New Roman')
+            ax.set_title(datasets2[idx], fontsize=18, fontfamily='Arial Unicode MS')
             ax.grid(linestyle='--', linewidth=0.5)
             ax.yaxis.set_major_formatter(FuncFormatter(lambda y, pos: f'{y/1000:.1f}'))
             ax.set_ylim(bottom=0)
@@ -159,12 +159,12 @@ if __name__ == "__main__":
             ax.yaxis.set_major_locator(plt.MaxNLocator(4))
             ax.xaxis.set_major_locator(plt.MaxNLocator(4))
             # 增大坐标轴数字字体大小
-            ax.tick_params(axis='both', which='major', labelsize=16, labelfontfamily='Times New Roman')
+            ax.tick_params(axis='both', which='major', labelsize=16, labelfontfamily='Arial Unicode MS')
 
         # 设置公共x/y轴标签
-        fig.text(0.5, 0.04, 'Recall@10', ha='center', fontsize=18, fontfamily='Times New Roman')
+        fig.text(0.5, 0.04, 'Recall@10', ha='center', fontsize=18, fontfamily='Arial Unicode MS')
         fig.text(
-            0.035, 0.5, r'$\mathrm{QPS}\ (10^{3})$',
+            0.035, 0.5, r'$\mathrm{QPS}\ (\times 10^{3})$',
             va='center', rotation='vertical', fontsize=18
         )
 
@@ -174,7 +174,7 @@ if __name__ == "__main__":
         legend.get_frame().set_edgecolor('none')  # 删除图例外边框
         legend.get_frame().set_facecolor('none')  # 删除图例背景
 
-        plt.rc('font', family='Times New Roman')
+        plt.rc('font', family='Arial Unicode MS')
         plt.savefig(f'E:/cppwork/dco_benchmarks/DATA/figure/RES/IVF/IVF_all_nosimd_dist_time.pdf', dpi=400, bbox_inches='tight',format='pdf')
         plt.show()
 
@@ -234,7 +234,7 @@ if __name__ == "__main__":
                 mask = recall >= 0.80
                 ax.plot(recall[mask], Qps[mask], marker=ivf_marker[i], c=col[i], label=label, alpha=0.5, linestyle="--", markerfacecolor='white', markersize=6, linewidth=2.5, markeredgecolor=col[i], markeredgewidth=1.5)
 
-            ax.set_title(datasets2[idx], fontsize=18, fontfamily='Times New Roman')
+            ax.set_title(datasets2[idx], fontsize=18, fontfamily='Arial Unicode MS')
             ax.grid(linestyle='--', linewidth=0.5)
             ax.yaxis.set_major_formatter(FuncFormatter(lambda y, pos: f'{y/1000:.1f}'))
             ax.set_ylim(bottom=0)
@@ -242,12 +242,12 @@ if __name__ == "__main__":
             ax.yaxis.set_major_locator(plt.MaxNLocator(4))
             ax.xaxis.set_major_locator(plt.MaxNLocator(4))
             # 增大坐标轴数字字体大小
-            ax.tick_params(axis='both', which='major', labelsize=16, labelfontfamily='Times New Roman')
+            ax.tick_params(axis='both', which='major', labelsize=16, labelfontfamily='Arial Unicode MS')
 
         # 设置公共x/y轴标签
-        fig.text(0.5, 0.04, 'Recall@10', ha='center', fontsize=18, fontfamily='Times New Roman')
+        fig.text(0.5, 0.04, 'Recall@10', ha='center', fontsize=18, fontfamily='Arial Unicode MS')
         fig.text(
-            0.035, 0.5, r'$\mathrm{QPS}\ (10^{3})$',
+            0.035, 0.5, r'$\mathrm{QPS}\ (\times 10^{3})$',
             va='center', rotation='vertical', fontsize=18
         )
 
@@ -257,6 +257,6 @@ if __name__ == "__main__":
         legend.get_frame().set_edgecolor('none')  # 删除图例外边框
         legend.get_frame().set_facecolor('none')  # 删除图例背景
 
-        plt.rc('font', family='Times New Roman')
+        plt.rc('font', family='Arial Unicode MS')
         plt.savefig(f'E:/cppwork/dco_benchmarks/DATA/figure/RES/IVF/IVF_all_simd_dist_time.pdf', dpi=400, bbox_inches='tight',format='pdf')
         plt.show()

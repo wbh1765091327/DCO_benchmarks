@@ -10,13 +10,13 @@ from matplotlib.ticker import FuncFormatter
 import matplotlib as mpl
 
 # 基础字体
-mpl.rcParams['font.family'] = 'Times New Roman'
+mpl.rcParams['font.family'] = 'Arial Unicode MS'
 
-# 让 mathtext 使用 Times New Roman
+# 让 mathtext 使用 Arial Unicode MS
 mpl.rcParams['mathtext.fontset'] = 'custom'
-mpl.rcParams['mathtext.rm'] = 'Times New Roman'
-mpl.rcParams['mathtext.it'] = 'Times New Roman'
-mpl.rcParams['mathtext.bf'] = 'Times New Roman'
+mpl.rcParams['mathtext.rm'] = 'Arial Unicode MS'
+mpl.rcParams['mathtext.it'] = 'Arial Unicode MS'
+mpl.rcParams['mathtext.bf'] = 'Arial Unicode MS'
 
 # datasets = ['glove-200-angular_1k','glove-200-angular_10k','glove-200-angular_100k','glove-200-angula_1000k']
 # datasets2 = ['GloVe-200-1k','GloVe-200-10k','GloVe-200-100k','GloVe-200-1000k']
@@ -130,7 +130,7 @@ if __name__ == "__main__":
                 ax.plot(recall[mask], Qps[mask], marker=ivf_marker[i], c=col[i], label=label, alpha=0.5, linestyle="--", markerfacecolor='white', markersize=6, linewidth=2.5, markeredgecolor=col[i], markeredgewidth=1.5)
             
 
-            ax.set_title(datasets2[idx], fontsize=22, fontfamily='Times New Roman')
+            ax.set_title(datasets2[idx], fontsize=22, fontfamily='Arial Unicode MS')
             ax.grid(linestyle='--', linewidth=0.5)
             ax.ticklabel_format(style='sci', axis='y', scilimits=(0, 0))
             ax.yaxis.set_major_formatter(plt.ScalarFormatter(useMathText=True))
@@ -154,7 +154,7 @@ if __name__ == "__main__":
         legend.get_frame().set_facecolor('none')  # 删除图例背景
 
 
-        # plt.rc('font', family='Times New Roman')
+        # plt.rc('font', family='Arial Unicode MS')
         plt.savefig(f'E:/cppwork/dco_benchmarks/DATA/figure/数据规模新/IVF_all_nosimd_num.pdf', dpi=400, bbox_inches='tight',format='pdf')
         plt.show()
 
@@ -212,7 +212,7 @@ if __name__ == "__main__":
                 mask = recall >= 0.80
                 ax.plot(recall[mask], Qps[mask], marker=ivf_marker[i], c=col[i], label=label, alpha=0.5, linestyle="--", markerfacecolor='white', markersize=6, linewidth=2.5, markeredgecolor=col[i], markeredgewidth=1.5)
 
-            ax.set_title(datasets2[idx], fontsize=18, fontfamily='Times New Roman')
+            ax.set_title(datasets2[idx], fontsize=18, fontfamily='Arial Unicode MS')
             # ax.grid(linestyle='--', linewidth=0.5)
             ax.grid(True, which="major", linestyle="--", linewidth=0.5)
             ax.minorticks_on()
@@ -238,7 +238,7 @@ if __name__ == "__main__":
         legend.get_frame().set_edgecolor('none')  # 删除图例外边框
         legend.get_frame().set_facecolor('none')  # 删除图例背景
 
-        plt.rc('font', family='Times New Roman')
+        plt.rc('font', family='Arial Unicode MS')
         plt.savefig(f'E:/cppwork/dco_benchmarks/DATA/figure/数据规模新/IVF_all_simd_num.pdf', dpi=400, bbox_inches='tight',format='pdf')
         plt.show()
     
@@ -279,7 +279,7 @@ if __name__ == "__main__":
                 ax.plot(recall[mask], Qps[mask], marker=ivf_marker[i], c=col[i], label=label, alpha=0.5, linestyle="--", markerfacecolor='white', markersize=6, linewidth=2.5, markeredgecolor=col[i], markeredgewidth=1.5)
 
             # 使用简化的数据集名称作为标题
-            ax.set_title(datasets2[idx], fontsize=22, fontfamily='Times New Roman')
+            ax.set_title(datasets2[idx], fontsize=22, fontfamily='Arial Unicode MS')
             ax.grid(linestyle='--', linewidth=0.5)
             ax.ticklabel_format(style='sci', axis='y', scilimits=(0, 0))
             ax.yaxis.set_major_formatter(FuncFormatter(lambda y, pos: f'{y/1000:.1f}'))
@@ -303,7 +303,7 @@ if __name__ == "__main__":
         legend.get_frame().set_edgecolor('none')  # 删除图例外边框
         legend.get_frame().set_facecolor('none')  # 删除图例背景
 
-        # plt.rc('font', family='Times New Roman')
+        # plt.rc('font', family='Arial Unicode MS')
         plt.savefig(f'E:/cppwork/dco_benchmarks/DATA/figure/数据规模新/hnsw_all_nosimd_num.pdf', dpi=400, bbox_inches='tight',format='pdf')
         plt.show()
 
@@ -352,7 +352,7 @@ if __name__ == "__main__":
                 mask = recall >= 0.80
                 ax.plot(recall[mask], Qps[mask], marker=ivf_marker[i], c=col[i], label=label, alpha=0.5, linestyle="--", markerfacecolor='white', markersize=6, linewidth=2.5, markeredgecolor=col[i], markeredgewidth=1.5)
 
-            ax.set_title(datasets2[idx], fontsize=22, fontfamily='Times New Roman')
+            ax.set_title(datasets2[idx], fontsize=22, fontfamily='Arial Unicode MS')
             ax.grid(linestyle='--', linewidth=0.5)
             ax.ticklabel_format(style='sci', axis='y', scilimits=(0, 0))
             ax.yaxis.set_major_formatter(plt.ScalarFormatter(useMathText=True))
@@ -377,6 +377,6 @@ if __name__ == "__main__":
         legend.get_frame().set_facecolor('none')  # 删除图例背景
 
 
-        # plt.rc('font', family='Times New Roman')
+        # plt.rc('font', family='Arial Unicode MS')
         plt.savefig(f'E:/cppwork/dco_benchmarks/DATA/figure/数据规模新/hnsw_all_simd_num.pdf', dpi=400, bbox_inches='tight',format='pdf')
         plt.show()

@@ -10,13 +10,13 @@ from matplotlib.ticker import FuncFormatter
 import matplotlib as mpl
 
 # 基础字体
-mpl.rcParams['font.family'] = 'Times New Roman'
+mpl.rcParams['font.family'] = 'Arial Unicode MS'
 
-# 让 mathtext 使用 Times New Roman
+# 让 mathtext 使用 Arial Unicode MS
 mpl.rcParams['mathtext.fontset'] = 'custom'
-mpl.rcParams['mathtext.rm'] = 'Times New Roman'
-mpl.rcParams['mathtext.it'] = 'Times New Roman'
-mpl.rcParams['mathtext.bf'] = 'Times New Roman'
+mpl.rcParams['mathtext.rm'] = 'Arial Unicode MS'
+mpl.rcParams['mathtext.it'] = 'Arial Unicode MS'
+mpl.rcParams['mathtext.bf'] = 'Arial Unicode MS'
 
 ivf_marker = ['o', 'o', 'o', 'o', 'o', 'o', 'o', 'o', 'o', 'o', 'o', 'o']
 col = ['#FF0000', '#0000FF', '#00AA00', '#FF8000', '#8000FF', '#FF1493', '#008B8B', '#B8860B', '#4B0082', '#228B22', '#FF4500']
@@ -213,7 +213,7 @@ if __name__ == "__main__":
                 ax.plot(recall[mask], Qps[mask], marker=ivf_marker[i], c=col[i], label=label, alpha=0.5, linestyle="--", markerfacecolor='white', markersize=6, linewidth=2.5, markeredgecolor=col[i], markeredgewidth=1.5)
             
 
-            ax.set_title(f"C={C}", fontsize=22, fontfamily='Times New Roman')
+            ax.set_title(f"C={C}", fontsize=22, fontfamily='Arial Unicode MS')
             ax.grid(linestyle='--', linewidth=0.5)
             ax.ticklabel_format(style='sci', axis='y', scilimits=(0, 0))
             ax.yaxis.set_major_formatter(plt.ScalarFormatter(useMathText=True))
@@ -235,7 +235,7 @@ if __name__ == "__main__":
         legend.get_frame().set_facecolor('none')  # 删除图例背景
 
 
-        # plt.rc('font', family='Times New Roman')
+        # plt.rc('font', family='Arial Unicode MS')
         plt.savefig(f'E:/cppwork/dco_benchmarks/DATA/figure/索引大小/IVF_all_nosimd_CLIST.pdf', dpi=400, bbox_inches='tight',format='pdf')
         plt.show()
 
@@ -292,7 +292,7 @@ if __name__ == "__main__":
                 ax.plot(recall[mask], Qps[mask], marker=ivf_marker[i], c=col[i], label=label, alpha=0.5, linestyle="--", markerfacecolor='white', markersize=6, linewidth=2.5, markeredgecolor=col[i], markeredgewidth=1.5)
             
 
-            ax.set_title(f"C={C}", fontsize=18, fontfamily='Times New Roman')
+            ax.set_title(f"C={C}", fontsize=18, fontfamily='Arial Unicode MS')
             # ax.grid(linestyle='--', linewidth=0.5)
             ax.grid(True, which="major", linestyle="--", linewidth=0.5)  # 主刻度和次刻度都画网格
             ax.minorticks_on()
@@ -318,7 +318,7 @@ if __name__ == "__main__":
         legend.get_frame().set_facecolor('none')  # 删除图例背景
 
 
-        # plt.rc('font', family='Times New Roman')
+        # plt.rc('font', family='Arial Unicode MS')
         plt.savefig(f'E:/cppwork/dco_benchmarks/DATA/figure/索引大小/IVF_all_simd_CLIST.pdf', dpi=400, bbox_inches='tight',format='pdf')
         plt.show()
 
@@ -369,7 +369,7 @@ if __name__ == "__main__":
                 ax.plot(recall[mask], Qps[mask], marker=ivf_marker[i], c=col[i], label=label, alpha=0.5, linestyle="--", markerfacecolor='white', markersize=6, linewidth=2.5, markeredgecolor=col[i], markeredgewidth=1.5)
             
 
-            ax.set_title(f"M={M}", fontsize=22, fontfamily='Times New Roman')
+            ax.set_title(f"M={M}", fontsize=22, fontfamily='Arial Unicode MS')
             ax.grid(linestyle='--', linewidth=0.5)
             ax.ticklabel_format(style='sci', axis='y', scilimits=(0, 0))
             ax.yaxis.set_major_formatter(plt.ScalarFormatter(useMathText=True))
@@ -391,7 +391,7 @@ if __name__ == "__main__":
         legend.get_frame().set_facecolor('none')  # 删除图例背景
 
 
-        # plt.rc('font', family='Times New Roman')
+        # plt.rc('font', family='Arial Unicode MS')
         plt.savefig(f'E:/cppwork/dco_benchmarks/DATA/figure/索引大小/HNSW_all_nosimd_M.pdf', dpi=400, bbox_inches='tight',format='pdf')
         plt.show()
 
@@ -442,7 +442,7 @@ if __name__ == "__main__":
                 ax.plot(recall[mask], Qps[mask], marker=ivf_marker[i], c=col[i], label=label, alpha=0.5, linestyle="--", markerfacecolor='white', markersize=6, linewidth=2.5, markeredgecolor=col[i], markeredgewidth=1.5)
             
 
-            ax.set_title(f"EF={EF}", fontsize=22, fontfamily='Times New Roman')
+            ax.set_title(f"EF={EF}", fontsize=22, fontfamily='Arial Unicode MS')
             ax.grid(linestyle='--', linewidth=0.5)
             ax.ticklabel_format(style='sci', axis='y', scilimits=(0, 0))
             ax.yaxis.set_major_formatter(plt.ScalarFormatter(useMathText=True))
@@ -464,7 +464,7 @@ if __name__ == "__main__":
         legend.get_frame().set_facecolor('none')  # 删除图例背景
 
 
-        # plt.rc('font', family='Times New Roman')
+        # plt.rc('font', family='Arial Unicode MS')
         plt.savefig(f'E:/cppwork/dco_benchmarks/DATA/figure/索引大小/HNSW_all_nosimd_EF.pdf', dpi=400, bbox_inches='tight',format='pdf')
         plt.show()
 
@@ -518,7 +518,7 @@ if __name__ == "__main__":
                 ax.plot(recall[mask], Qps[mask], marker=ivf_marker[i], c=col[i], label=label, alpha=0.5, linestyle="--", markerfacecolor='white', markersize=6, linewidth=2.5, markeredgecolor=col[i], markeredgewidth=1.5)
             
 
-            ax.set_title(f"M={M}", fontsize=22, fontfamily='Times New Roman')
+            ax.set_title(f"M={M}", fontsize=22, fontfamily='Arial Unicode MS')
             ax.grid(linestyle='--', linewidth=0.5)
             ax.ticklabel_format(style='sci', axis='y', scilimits=(0, 0))
             ax.yaxis.set_major_formatter(plt.ScalarFormatter(useMathText=True))
@@ -540,7 +540,7 @@ if __name__ == "__main__":
         legend.get_frame().set_facecolor('none')  # 删除图例背景
 
 
-        # plt.rc('font', family='Times New Roman')
+        # plt.rc('font', family='Arial Unicode MS')
         plt.savefig(f'E:/cppwork/dco_benchmarks/DATA/figure/索引大小/HNSW_all_simd_M.pdf', dpi=400, bbox_inches='tight',format='pdf')
         plt.show()
 
@@ -593,7 +593,7 @@ if __name__ == "__main__":
                 ax.plot(recall[mask], Qps[mask], marker=ivf_marker[i], c=col[i], label=label, alpha=0.5, linestyle="--", markerfacecolor='white', markersize=6, linewidth=2.5, markeredgecolor=col[i], markeredgewidth=1.5)
             
 
-            ax.set_title(f"EF={EF}", fontsize=22, fontfamily='Times New Roman')
+            ax.set_title(f"EF={EF}", fontsize=22, fontfamily='Arial Unicode MS')
             ax.grid(linestyle='--', linewidth=0.5)
             ax.ticklabel_format(style='sci', axis='y', scilimits=(0, 0))
             ax.yaxis.set_major_formatter(plt.ScalarFormatter(useMathText=True))
@@ -615,6 +615,6 @@ if __name__ == "__main__":
         legend.get_frame().set_facecolor('none')  # 删除图例背景
 
 
-        # plt.rc('font', family='Times New Roman')
+        # plt.rc('font', family='Arial Unicode MS')
         plt.savefig(f'E:/cppwork/dco_benchmarks/DATA/figure/索引大小/HNSW_all_simd_EF.pdf', dpi=400, bbox_inches='tight',format='pdf')
         plt.show()
