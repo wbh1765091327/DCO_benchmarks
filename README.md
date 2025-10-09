@@ -2,6 +2,7 @@
 
 ## Introduction
 
+This work investigated and benchmarked mainstream DCO optimization methods. We divided existing methods into projection pruning based and quantization based techniques, and reviewed representative methods in each category. Extensive experiments were conducted on eight datasets, covering different index structures and implementations, evaluating key metrics such as time accuracy trade-offs and preprocessing overhead, while examining their scalability in terms of data dimensions and scale. Based on our findings, we provide performance characteristics to guide method selection and point out promising directions for future research.
 
 ## Dataset
 
@@ -34,7 +35,8 @@ Our server setup includes two Intel Xeon Gold 5318Y CPUs, each with 24 cores and
 We also provide a dockerfile based on Ubuntu22.04 with all the dependencies installed. All the following experiments need to set the base or source path in the py and sh files according to their own environment, otherwise an error will occur when running.
 
 ## Setup dataset
-首先将数据下载到/benchmarks/DATA/hdf5目录下，将hdf5格式转化为fvecs格式的query和base，然后根据实验需求(完整数据集还是部分数据集)决定是否执行data_split.py。
+
+Firstly, download the data to the/benchmarks/DATA/hdv5 directory, convert the hdf5 format to query and base in fvecs format, and then decide whether to execute data_stplit. py based on the experimental requirements (complete dataset or partial dataset).
 
 ```sh
 cd benchmarks
@@ -46,10 +48,11 @@ python ./benchmarks/python/data_split.py
 ## How to Run
 
 ### Res-Info
-我们首先测试 Baseline , ADSampling , DDC-res , DDC-pca, DDC-opq, Finger
-首先将数据处理后的不同dataset的base,query,gt三个文件放入到Res-Infer/DATA/${dataset}目录下。然后编译
 
-Baseline和ADSampling的索引预处理和构建
+We first test Baseline, ADSamping, DDC res, DDC pca, DDC opq, Finger
+Firstly, place the base, query, and gt files of different datasets after data processing into the Res Transfer/DATA/${dataset} directory. Then compile.
+
+Preprocessing and construction of indexes for Baseline and ADSampling
 ```bash
 ./make_dir.sh
 cd ../script/
@@ -57,7 +60,7 @@ cd ../script/
 ./index_ivf.sh
 ./index_hnsw.sh
 ```
-DDC-res,DDC-pca,DDC-opq的索引预处理和构建
+Index preprocessing and construction for DDC res, DDC pca, and DDC opq
 ```bash
 cd ../script/
 ./index_pca.sh
@@ -65,12 +68,12 @@ cd ../script/
 ./linear.sh
 ```
 
-Finger的索引预处理和构建
+Finger's index preprocessing and construction
 ```bash
 python3 finger.py
 ```
 
-修改编译条件并编译
+Modify compilation conditions and compile
 ```bash
 cd build && make build
 ./search_ivf.sh
@@ -81,7 +84,7 @@ cd build && make build
 ```
 ### DADE
 
-首先将数据处理后的不同dataset的base,query,gt三个文件放入到DADE/data/${dataset}目录下。然后编译,同样需要在DADE/CMakeLists.txt下修改add_definitions条件。
+Firstly, place the base, query, and gt files of different datasets after data processing into the DADE/data/${dataset} directory. Then compile, and also modify the add_definitions condition in DADE/CMakeLists.txt.
 ```bash
 ./index_ivf.sh
 ./index_hnsw.sh
@@ -93,7 +96,7 @@ cd build && make build
 
 ### PDX
 
-首先将hdf5文件放入到PDX/benchmarks/download目录下。首先修改set_settings.py中的DATASETS和DIMENSIONALITIES以及PDX/include/utils/benchmark_utils.hpp中过的DATASETS。
+First, place the HDF5 file into the PDX/benchmarks/download directory. Firstly, modify the DATASETS and DIMENSIONALITIES in set_detting.py, as well as the DATASETS in PDX/include/tilt/benchmark_utils.hpp.
 ```bash
 python3 ./benchmarks/python_scripts/setup_data.py
 # GRAVITON4
@@ -112,7 +115,7 @@ cmake . -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_FLAGS_RELEASE="-O3 -march=znver3 
 
 ### RabitQ
 
-首先将数据处理后的不同dataset的base,query,gt三个文件放入到RaBitQ-Library/data/${dataset}目录下。然后编译并执行example2.sh。
+Firstly, place the base, query, and gt files of different datasets after data processing into the RaBitQ Library/data/${dataset} directory. Then compile and execute Example 2. sh.
 ```bash
 cd build && make build
 cd ..
@@ -120,7 +123,7 @@ chmod +x example2.sh && ./example2.sh
 ```
 ### Flash
 
-首先将数据处理后的不同dataset的base,query,gt三个文件放入到HNSW-Flash/data/${dataset}目录下。。
+Firstly, place the base, query, and gt files of different datasets after data processing into the HNSW Flash/data/${dataset} directory.
 ```bash
 make build
 cd ./bin && ./main -k 10 -s 200 -v 16 -p 16 ${dataset} flash
@@ -128,7 +131,7 @@ cd ./bin && ./main -k 10 -s 200 -v 16 -p 16 ${dataset} flash
 
 ### Tribase
 
-首先将数据处理后的不同dataset的base,query两个个文件放入到Tribase/benchmarks/${dataset}/origin目录下,修改query.cpp中的dataset数组。
+Firstly, place the base and query files of different datasets after data processing into the Tribase/benchmarks/${dataset}/origin directory, and modify the dataset array in query.cpp.
 ```bash
 cd build && make build
 ./build/bin/query  --opt_levels  OPT_ALL --nprobes 2 4 6 8 10 12 14 16 18 20 22 24 26 28 32 40 48 56 64 80 96 112 128 144 160 192 224 256 512 --cache  --verbose
@@ -136,7 +139,7 @@ cd build && make build
 
 ### SuCo
 
-首先将数据处理后的不同dataset的base,query,gt三个文件放入到SuCo/data/${dataset}目录下。
+Firstly, place the base, query, and gt files of different datasets after data processing into the SuCo/data/${dataset} directory.
 ```bash
 make
 cd ./script && ./run.sh
