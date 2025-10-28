@@ -2,11 +2,11 @@
 
 ## Introduction
 
-This work investigated and benchmarked mainstream DCO optimization methods. We divided existing methods into projection pruning based and quantization based techniques, and reviewed representative methods in each category. Extensive experiments were conducted on eight datasets, covering different index structures and implementations, evaluating key metrics such as time accuracy trade-offs and preprocessing overhead, while examining their scalability in terms of data dimensions and scale. Based on our findings, we provide performance characteristics to guide method selection and point out promising directions for future research.
+This work investigated and benchmarked mainstream DCO optimization methods. We divided existing methods into projection pruning based and quantization based techniques, and reviewed representative methods in each category. Extensive experiments were conducted on eight types of datasets, covering different index structures and implementations, evaluating key metrics such as time accuracy trade-offs and preprocessing overhead, while examining their scalability in terms of data dimensions and scale. Based on our findings, we provide performance characteristics to guide method selection and point out promising directions for future research.
 
 ## Dataset
 
-We have prepared some real-world datasets for testing in benchmarks folder. You can download the large datasets from the following [links](https://drive.google.com/drive/folders/1f76UCrU52N2wToGMFg9ir1MY8ZocrN34):
+We have prepared some real-world datasets for testing in `benchmarks` folder. You can download the large datasets from the following [links](https://drive.google.com/drive/folders/1f76UCrU52N2wToGMFg9ir1MY8ZocrN34):
 
 
 | Dataset     | Dimension | Number of Data Items | Number of Queries | Type   | Distribution |
@@ -25,32 +25,55 @@ We have prepared some real-world datasets for testing in benchmarks folder. You 
 
 ### Dataset Format
 
-You need to place the hdf5 data file in the dcoubenchmarks \ DATA \ hdf5 directory, or place the fvecs file in the dcoubenchmarks \ DATA \ vecs directory. You can do it through the converte2hdf5. py and converte2fvecs. py files in the dcoubenchmarks \ python directory
+You need to place the hdf5 data file in the `dco_benchmarks/DATA/hdf5` directory, or place the fvecs file in the `dco_benchmarks/DATA/vecs` directory. You can do it through the `converte2hdf5.py` and `converte2fvecs.py` files in the `dco_benchmarks/python` directory.
 
 
 ## Experimental Setup
 
 Our server setup includes two Intel Xeon Gold 5318Y CPUs, each with 24 cores and 48 threads, totaling 96 CPU cores. The server boasts 2TB of memory and runs on CentOS Stream 8 operating system.
 
-We also provide a dockerfile based on Ubuntu22.04 with all the dependencies installed. All the following experiments need to set the base or source path in the py and sh files according to their own environment, otherwise an error will occur when running.
+We also provide a Dockerfile based on Ubuntu 22.04 with all dependencies pre-installed. 
 
-## Setup dataset
+**Important Notes:**
+- All experiments require setting the base or source paths in `.py` and `.sh` files according to your environment
+- Directory structure:
+  - `dco_benchmarks/DATA/` - Stores experimental data
+  - `dco_benchmarks/python/` - Contains Python scripts for data processing
+  - `dco_benchmarks/DATA/figure/` - Stores generated figures and visualizations
 
-Firstly, download the data to the/benchmarks/DATA/hdv5 directory, convert the hdf5 format to query and base in fvecs format, and then decide whether to execute data_stplit. py based on the experimental requirements (complete dataset or partial dataset).
+## Setup Dataset
+
+Firstly, download the data to the `dco_benchmarks/DATA/hdf5` directory, convert the hdf5 format to query and base in fvecs format, and then decide whether to execute `data_split.py` based on the experimental requirements (complete dataset or partial dataset).
 
 ```sh
-cd benchmarks
+cd dco_benchmarks
 pip install -r ./python/requirements.txt
-python ./benchmarks/python/converte2fvecs.py
-python ./benchmarks/python/data_split.py
+python ./python/converte2fvecs.py
+python ./python/data_split.py
 ```
 
 ## How to Run
 
-### Res-Info
+Before running any experiments, initialize all submodules:
+```bash
+# Initialize all submodules (use --recursive if submodules contain nested submodules)
+git submodule update --init --recursive
 
-We first test Baseline, ADSamping, DDC res, DDC pca, DDC opq, Finger
-Firstly, place the base, query, and gt files of different datasets after data processing into the Res Transfer/DATA/${dataset} directory. Then compile.
+# Or simply:
+git submodule update --init
+```
+
+Or initialize specific submodules as needed (shown in each section below).
+
+### Res-Infer
+
+Initialize the submodule:
+```bash
+git submodule update --init --recursive Res-Infer
+```
+
+We first test Baseline, ADSampling, DDC res, DDC pca, DDC opq, Finger
+Firstly, place the `base`, `query`, and `gt` files of different datasets after data processing into the `Res-Infer/DATA/${dataset}` directory. Then compile.
 
 Preprocessing and construction of indexes for Baseline and ADSampling
 ```bash
@@ -70,7 +93,7 @@ cd ../script/
 
 Finger's index preprocessing and construction
 ```bash
-python3 finger.py
+python3 ./DATA/finger.py
 ```
 
 Modify compilation conditions and compile
@@ -84,7 +107,12 @@ cd build && make build
 ```
 ### DADE
 
-Firstly, place the base, query, and gt files of different datasets after data processing into the DADE/data/${dataset} directory. Then compile, and also modify the add_definitions condition in DADE/CMakeLists.txt.
+Initialize the submodule:
+```bash
+git submodule update --init --recursive DADE
+```
+
+Firstly, place the `base`, `query`, and `gt` files of different datasets after data processing into the `DADE/data/${dataset}` directory. Then compile, and also modify the `add_definitions` condition in `DADE/CMakeLists.txt`.
 ```bash
 ./index_ivf.sh
 ./index_hnsw.sh
@@ -96,7 +124,12 @@ Firstly, place the base, query, and gt files of different datasets after data pr
 
 ### PDX
 
-First, place the HDF5 file into the PDX/benchmarks/download directory. Firstly, modify the DATASETS and DIMENSIONALITIES in set_detting.py, as well as the DATASETS in PDX/include/tilt/benchmark_utils.hpp.
+Initialize the submodule:
+```bash
+git submodule update --init --recursive PDX
+```
+
+First, place the HDF5 file into the `PDX/benchmarks/download` directory. Then, modify the `DATASETS` and `DIMENSIONALITIES` in `set_setting.py`, as well as the `DATASETS` in `PDX/include/tilt/benchmark_utils.hpp`.
 ```bash
 python3 ./benchmarks/python_scripts/setup_data.py
 # GRAVITON4
@@ -109,13 +142,18 @@ cmake . -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_FLAGS_RELEASE="-O3 -march=sapphir
 cmake . -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_FLAGS_RELEASE="-O3 -march=znver4 -mtune=znver4"
 # ZEN3
 cmake . -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_FLAGS_RELEASE="-O3 -march=znver3 -mtune=znver3"
-# 是否开启PDX_USE_EXPLICIT_SIMD标记
+# Whether to enable PDX_USE_EXPLICIT_SIMD flag
 ./benchmarks/benchmark_ivf.sh python3
 ```
 
 ### RabitQ
 
-Firstly, place the base, query, and gt files of different datasets after data processing into the RaBitQ Library/data/${dataset} directory. Then compile and execute Example 2. sh.
+Initialize the submodule:
+```bash
+git submodule update --init --recursive RaBitQ-Library
+```
+
+Firstly, place the `base`, `query`, and `gt` files of different datasets after data processing into the `RaBitQ-Library/data/${dataset}` directory. Then compile and execute `example2.sh`.
 ```bash
 cd build && make build
 cd ..
@@ -123,7 +161,12 @@ chmod +x example2.sh && ./example2.sh
 ```
 ### Flash
 
-Firstly, place the base, query, and gt files of different datasets after data processing into the HNSW Flash/data/${dataset} directory.
+Initialize the submodule:
+```bash
+git submodule update --init --recursive HNSW-Flash
+```
+
+Firstly, place the `base`, `query`, and `gt` files of different datasets after data processing into the `HNSW-Flash/data/${dataset}` directory.
 ```bash
 make build
 cd ./bin && ./main -k 10 -s 200 -v 16 -p 16 ${dataset} flash
@@ -131,7 +174,12 @@ cd ./bin && ./main -k 10 -s 200 -v 16 -p 16 ${dataset} flash
 
 ### Tribase
 
-Firstly, place the base and query files of different datasets after data processing into the Tribase/benchmarks/${dataset}/origin directory, and modify the dataset array in query.cpp.
+Initialize the submodule:
+```bash
+git submodule update --init --recursive Tribase
+```
+
+Firstly, place the `base` and `query` files of different datasets after data processing into the `Tribase/benchmarks/${dataset}/origin` directory, and modify the dataset array in `query.cpp`.
 ```bash
 cd build && make build
 ./build/bin/query  --opt_levels  OPT_ALL --nprobes 2 4 6 8 10 12 14 16 18 20 22 24 26 28 32 40 48 56 64 80 96 112 128 144 160 192 224 256 512 --cache  --verbose
@@ -139,7 +187,12 @@ cd build && make build
 
 ### SuCo
 
-Firstly, place the base, query, and gt files of different datasets after data processing into the SuCo/data/${dataset} directory.
+Initialize the submodule:
+```bash
+git submodule update --init --recursive SuCo
+```
+
+Firstly, place the `base`, `query`, and `gt` files of different datasets after data processing into the `SuCo/data/${dataset}` directory.
 ```bash
 make
 cd ./script && ./run.sh
