@@ -132,6 +132,10 @@ if __name__ == "__main__":
                     label = r"IVF-DDC$_{opq}$"
                     filename = f"E:/cppwork/dco_benchmarks/DATA/Res-opq/ivf/IVF_RES_nosimd_6_dist_time.csv"
                     recall, Qps = load_result_data(filename, dataset)
+                elif i == 6:
+                    label = "IVF-RaBitQ"
+                    filename = f"E:/cppwork/dco_benchmarks/DATA/RabitQnew/IVF_7BIT_NOSIMD_RabitQ_nosimd.csv"
+                    recall, Qps = load_result_data_RabitQ(filename, dataset)
                 elif i == 7:
                     label = "IVF-Tribase"
                     filename = f"E:/cppwork/dco_benchmarks/DATA/Tribase/IVF_Tribase_nosimd_new.csv"
@@ -175,7 +179,7 @@ if __name__ == "__main__":
         legend.get_frame().set_facecolor('none')  # 删除图例背景
 
         plt.rc('font', family='Arial Unicode MS')
-        plt.savefig(f'E:/cppwork/dco_benchmarks/DATA/figure/RES/IVF/IVF_all_nosimd_dist_time.pdf', dpi=400, bbox_inches='tight',format='pdf')
+        plt.savefig(f'E:/cppwork/dco_benchmarks/DATA/figure/RES/IVF/IVF_all_nosimd_dist_time_v2.pdf', dpi=400, bbox_inches='tight',format='pdf')
         plt.show()
 
 

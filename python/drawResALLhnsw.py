@@ -173,28 +173,37 @@ if __name__ == "__main__":
                 if i == 0:
                     label = "HNSW"
                     filename = f"E:/cppwork/dco_benchmarks/DATA/Resnew/hnsw/nosimd/HNSW_RES_nosimd_0_dist_time.csv"
+                    recall, Qps = load_result_data(filename, dataset)
                 elif i == 1:
                     label = "HNSW-ADS"
                     filename = f"E:/cppwork/dco_benchmarks/DATA/Resnew/hnsw/nosimd/HNSW_RES_nosimd_1_dist_time.csv"
+                    recall, Qps = load_result_data(filename, dataset)
                 # elif i == 9:
                 #     label = "HNSW-Finger"
                 #     filename = f"E:/cppwork/dco_benchmarks/DATA/Finger/HNSW_RES_nosimd_9_dist_time.csv"
                 elif i == 2:
                     label = "HNSW-DADE"
                     filename = f"E:/cppwork/dco_benchmarks/DATA/DADEnew/HNSW_DADE_3_NOSIMD_dist_time.csv"
+                    recall, Qps = load_result_data(filename, dataset)
                 elif i == 3:
                     label = r"HNSW-DDC$_{res}$"
                     filename = f"E:/cppwork/dco_benchmarks/DATA/Resnew/hnsw/nosimd/HNSW_RES_nosimd_7_dist_time.csv"
+                    recall, Qps = load_result_data(filename, dataset)
                 elif i == 4:
                     label = r"HNSW-DDC$_{pca}$"
                     filename = f"E:/cppwork/dco_benchmarks/DATA/Resnew/hnsw/nosimd/HNSW_RES_nosimd_6_dist_time.csv"
+                    recall, Qps = load_result_data(filename, dataset)
                 elif i == 5:
                     label = r"HNSW-DDC$_{opq}$"
                     filename = f"E:/cppwork/dco_benchmarks/DATA/Res-opq/hnsw/HNSW_RES_nosimd_3_dist_time.csv"
-                elif i == 6 or i == 7 or i == 8:
+                    recall, Qps = load_result_data(filename, dataset)
+                elif i == 6:
+                    label = "HNSW-RaBitQ"
+                    filename = f"E:/cppwork/dco_benchmarks/DATA/RabitQnew/HNSW_7BIT_NOSIMD_RabitQ_nosimd.csv"
+                    recall, Qps = load_result_data_RabitQ(filename, dataset)
+                elif i == 7 or i == 8:
                     continue
 
-                recall, Qps = load_result_data(filename, dataset)
                 mask = recall >= 0.80
                 ax.plot(recall[mask], Qps[mask], marker=ivf_marker[i], c=col[i], label=label, alpha=0.5, linestyle="--", markerfacecolor='white', markersize=6, linewidth=2.5, markeredgecolor=col[i], markeredgewidth=1.5)
 
@@ -217,7 +226,7 @@ if __name__ == "__main__":
         )
 
         handles, labels = ax.get_legend_handles_labels()
-        legend = fig.legend(handles, labels, loc='upper center', ncol=3, fontsize=18, 
+        legend = fig.legend(handles, labels, loc='upper center', ncol=4, fontsize=18, 
                           bbox_to_anchor=(0.5, 1.03), handlelength=3, handletextpad=1.2, columnspacing=1.5)
         legend.get_frame().set_edgecolor('none')  # 删除图例外边框
         legend.get_frame().set_facecolor('none')  # 删除图例背景

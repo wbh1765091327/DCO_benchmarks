@@ -26,7 +26,8 @@ def extract_bit_from_filename(filename):
     """从文件名中提取bit标识"""
     # 使用正则表达式匹配文件名末尾的数字（bit标识）
     # 例如：hnsw_rabitq_querying_7.log -> 7
-    match = re.search(r'_(\d+)\.log$', filename)
+    #       hnsw_rabitq_querying_7_nosimd.log -> 7
+    match = re.search(r'_(\d+)(?:_nosimd)?\.log$', filename)
     if match:
         return int(match.group(1))
     else:
@@ -84,11 +85,16 @@ def consolidate_logs_by_method_and_bit(directory_path, output_dir):
     
     for log_file in log_files:
         filename = os.path.basename(log_file)
+        
+        # 只处理 nosimd 文件，跳过 SIMD 文件
+        if '_nosimd' not in filename.lower():
+            continue
+        
         method = extract_method_from_filename(filename)
         bit = extract_bit_from_filename(filename)
         
         if method != 'unknown' and bit is not None:
-            key = f"{method}_{bit}bit"
+            key = f"{method}_{bit}bit_nosimd"
             if key not in method_bit_files:
                 method_bit_files[key] = []
             method_bit_files[key].append(log_file)
@@ -134,7 +140,7 @@ def consolidate_logs_by_method_and_bit(directory_path, output_dir):
             print(f"  去重后数据行数: {len(combined_df)}")
             
             # 保存到CSV文件
-            output_file = os.path.join(output_dir, f"{method_bit.upper()}_RabitQ.csv")
+            output_file = os.path.join(output_dir, f"{method_bit.upper()}_RabitQ_nosimd.csv")
             combined_df.to_csv(output_file, index=False)
             print(f"  {method_bit} 数据已保存到: {output_file}")
             print(f"  总共 {len(combined_df)} 行数据")
@@ -151,8 +157,8 @@ def consolidate_logs_by_method_and_bit(directory_path, output_dir):
 
 if __name__ == "__main__":
     # 设置路径
-    log_directory = r"E:\cppwork\dco_benchmarks\DATA\RabitQnew\数据规模和分布新"
-    output_directory = r"E:\cppwork\dco_benchmarks\DATA\RabitQnew\数据规模和分布新"
+    log_directory = r"E:\cppwork\dco_benchmarks\DATA\RabitQnew"
+    output_directory = r"E:\cppwork\dco_benchmarks\DATA\RabitQnew"
     
     # 执行整合（按方法和bit分别处理）
     print("开始按方法和bit分别整合log文件...")
